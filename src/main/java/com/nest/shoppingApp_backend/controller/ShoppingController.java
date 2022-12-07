@@ -14,19 +14,27 @@ public class ShoppingController {
 private ProductDao dao;
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/add",consumes = "application/json",produces = "application/json")
-    public String AddProduct(@RequestBody Product p){
+    public HashMap<String, String> AddProduct(@RequestBody Product p){
         System.out.println(p.getName().toString());
         System.out.println(p.getCategory().toString());
         dao.save(p);
-        HashMap<String, String>
-                map=new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
         map.put("status","success");
-        return "successfully added product";
+
+        return map;
     }
     @CrossOrigin(origins = "*")
     @GetMapping("/view")
     public List<Product>view(){
         return (List<Product>) dao.findAll();
 
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/search",consumes = "application/json",produces = "application/json")
+    public List<Product>search(@RequestBody Product p){
+        String name = String.valueOf(p.getName());
+        System.out.println(name);
+        return (List<Product>) dao.search(p.getName());
     }
 }
