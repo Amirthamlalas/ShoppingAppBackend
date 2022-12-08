@@ -52,4 +52,13 @@ private UserDao uao;
         System.out.println(name);
         return (List<Product>) dao.search(p.getName());
     }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/login",consumes = "application/json",produces = "application/json")
+    public List<UserSignup>login(@RequestBody UserSignup u){
+        String email = String.valueOf(u.getEmail());
+        String password = String.valueOf(u.getPassword());
+        System.out.println(email);
+        System.out.println(password);
+        return (List<UserSignup>)uao.login(u.getEmail(),u.getPassword());
+    }
 }
